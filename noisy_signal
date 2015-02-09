@@ -1,0 +1,15 @@
+clear all;close all;clc;
+L=30;%time slots
+n=512;%Fourier modes
+
+t2=linspace(-L/2,L/2,n+1); t=t2(1:n);%time discre
+k=(2*pi/(2*L))*[0:(n/2-1) -n/2:-1]; % frequency components of FFT
+
+u=sech(t);
+noise=30;
+ut=fft(u);
+utn=ut+noise*(randn(1,n)+i*randn(1:n))
+
+un=ifft(utn);
+figure(1), subplot(3,1,1), plot(t,u,'k'), hold on
+figure(1), subplot(3,1,2), plot(t,abs(un),'k'), hold on
