@@ -1,0 +1,22 @@
+clear all;close all;clc;
+T=30;%time slots
+n=512;%Fourier modes
+
+t2=linspace(-T/2,T/2,n+1); t=t2(1:n);
+k=(2*pi/(2*T))*[0:(n/2-1) -n/2:-1]; % frequency components of FFT
+ks=ifftshift(k);
+
+u=sech(t);
+ut=fft(u);
+
+noise=30;
+ave=zeros(1,n);
+realisations=100;
+for j=(1:realisations)
+    utn=ut+ noise*(randn(1,n)+ i*randn(1,n));
+    ave=ave+utn;
+    ave2=abs(fftshift(ave))/j;
+plot(ks,abs(fftshift(ut)),'r',ks,ave2,'k');
+pause(0.5)
+end
+
